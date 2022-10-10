@@ -23,23 +23,32 @@ class _HomePageState extends State<HomePage> {
     // print(testdata.title);
   }
 
-  final List postData = [];
+  late List<dynamic> postData = [];
 
   Future getData() async {
     final response =
         await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
     // print('${response.body}');
     final data = jsonDecode(response.body);
-    // print(data);
     // print(data[0]['title']);
-    Posts a = Posts.fromJson(data[0]);
+    // Posts a = Posts.fromJson(data.toList());
     // return Posts.fromJson(data[0]);
     // print("hello 1 :${a.title}");
     // print("hello 2 :${a.body}");
 
     // print(a.body);
-
-    return a;
+    // a.map((e) => postData.add(a.id));
+    data
+        .map(
+          (e) => postData.add(
+            Posts.fromJson(e),
+          ),
+        )
+        .toList();
+    print(postData.length);
+    print(postData[0].title);
+    // print('heres testdata: ${postData[0]}');
+    // return postData; // return a;
   }
 
   @override
@@ -61,21 +70,41 @@ class _HomePageState extends State<HomePage> {
       //     ],
       //   ),
       // ),
-      body: FutureBuilder(
-          builder: (context, AsyncSnapshot snapshot) {
-            return snapshot.hasData ? Column(
-              children: [
-                Text('${snapshot.data.title}'),
-                // ElevatedButton(
-                //     child: Text('Get Data'),
-                //     onPressed: () {
-                //       getData();
-                //       Get.to(PostPage(), transition: Transition.cupertino);
-                //     }),
-              ],
-            ): Center(child: CircularProgressIndicator(),);
-          },
-          future: getData()),
+      //////////////
+      ///
+      /// FETCHED DATA THROUGH FUTURE BUILDER
+      ////////////////////////
+      ///
+      // body: FutureBuilder(
+      //     builder: (context, AsyncSnapshot snapshot) {
+      //       return snapshot.hasData ? Column(
+      //         children: [
+      //           Text('${snapshot.data.title}'),
+      //           // ElevatedButton(
+      //           //     child: Text('Get Data'),
+      //           //     onPressed: () {
+      //           //       getData();
+      //           //       Get.to(PostPage(), transition: Transition.cupertino);
+      //           //     }),
+      //         ],
+      //       ): Center(child: CircularProgressIndicator(),);
+      //     },
+      //     future: getData()),
+
+      body: postData.length == 0
+          ? ListView.builder(
+              itemBuilder: (context, index) {
+                print(postData.length);
+                return ListTile(
+                  title: Text('falsdfj'),
+                  leading: CircleAvatar(),
+                );
+              },
+              itemCount: 2,
+            )
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
     );
   }
 }
