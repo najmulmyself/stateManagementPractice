@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'package:api_practice/modal/posts.dart';
 import 'package:http/http.dart' as http;
 
-
 class ApiService {
-
   Future<List<Posts>?> getData() async {
     var response =
         await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
@@ -19,7 +17,7 @@ class ApiService {
 
     // print(a.body);
     // a.map((e) => postData.add(a.id));
-  // final List<dynamic> postData = [];
+    // final List<dynamic> postData = [];
 
     // data
     //     .map(
@@ -31,7 +29,11 @@ class ApiService {
     // print(postData.length);
     // print(postData[0].title);
     // print('heres testdata: ${postData[0]}');
-    return postsFromJson(data);
+    print(data.runtimeType);
+    data.forEach((element) {
+      postsFromJson(element);
+    });
+    // return Posts.fromJson(data);
     // return postData; // return a;
   }
 }
