@@ -1,3 +1,4 @@
+import 'package:api_practice/screen/getFav.dart';
 import 'package:api_practice/screen/getSlider.dart';
 import 'package:api_practice/screen/getxHome.dart';
 import 'package:api_practice/screen/home_page.dart';
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       // home: GetHome(),
-      home: GetSlider(),
+      home: GetFav(),
     );
   }
 }
